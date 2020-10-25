@@ -11,7 +11,8 @@ class App extends Component {
       { name: 'Kanishka', age: 32 },
       { name: 'Anne', age: 19 }
     ],
-    otherState: 'some other value'
+    otherState: 'some other value',
+    showPerson: false
   }
 
   switchNameHandler = (newName) => {
@@ -38,6 +39,11 @@ class App extends Component {
     })
   }
 
+  togglePersonHandler = () => {
+    const doesShow = this.state.showPerson;
+    this.setState({showPerson : !doesShow});
+  }
+
   render() {
     // inline styling
     const style = {
@@ -48,6 +54,27 @@ class App extends Component {
       cursor: 'pointer'
     };
 
+    let person = null;
+
+    if (this.state.showPerson) {
+      person = (
+        <div>
+          <Person 
+          name={this.state.people[0].name} 
+          age={this.state.people[0].age} />
+          <Person 
+          name={this.state.people[1].name} 
+          age={this.state.people[1].age}  
+            click={this.switchNameHandler.bind(this, 'Disandi')} 
+            changed={this.nameChangeHandler}>My Hobbies are: Cleaning the house 
+          </Person>
+          <Person 
+          name={this.state.people[2].name} 
+          age={this.state.people[2].age} />
+        </div> 
+      )
+    }
+
     return (
       <div className="App">
         <h1>Hi, I am a React App</h1>
@@ -55,20 +82,24 @@ class App extends Component {
         {/* <button onClick={this.switchNameHandler.bind(this, 'Sanduni')}>Switch Name</button>  */}
         <button 
         style={style}
-        onClick={() => this.switchNameHandler('Sanduni!')}>Switch Name</button>
-        <Person 
-        name={this.state.people[0].name} 
-        age={this.state.people[0].age} />
-        <Person 
-        name={this.state.people[1].name} 
-        age={this.state.people[1].age}  
-        // we can pass methods also as props, eg: the switchNameHandler method is passed as a prop in here.
-          click={this.switchNameHandler.bind(this, 'Disandi')} 
-          changed={this.nameChangeHandler}>My Hobbies are: Cleaning the house 
-        </Person>
-        <Person 
-        name={this.state.people[2].name} 
-        age={this.state.people[2].age} />
+        onClick={this.togglePersonHandler}>Toggle Person</button>
+        {/*this.state.showPerson === true ?
+          <div>
+          <Person 
+          name={this.state.people[0].name} 
+          age={this.state.people[0].age} />
+          <Person 
+          name={this.state.people[1].name} 
+          age={this.state.people[1].age}  
+          // we can pass methods also as props, eg: the switchNameHandler method is passed as a prop in here.
+            click={this.switchNameHandler.bind(this, 'Disandi')} 
+            changed={this.nameChangeHandler}>My Hobbies are: Cleaning the house 
+          </Person>
+          <Person 
+          name={this.state.people[2].name} 
+          age={this.state.people[2].age} />
+        </div> : null */}
+        {person}
       </div>
 
      // <h1>Hi I am another element returning</h1> - cannot do this as JSX only let one root element
