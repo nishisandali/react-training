@@ -1,6 +1,7 @@
+//---------------------App.js-----------------//
 import React, { Component } from 'react';
-
 import './App.css';
+import Radium, { StyleRoot } from 'radium';
 
 import Person from './Person/Person';
 
@@ -47,7 +48,16 @@ class App extends Component {
 
   render() {
     const style = {
-
+      backgroundColor: 'green',
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     let person = null;
@@ -66,11 +76,11 @@ class App extends Component {
         </div> 
       );
 
-      // style.backgroundColor = 'red';
-      // style[':hover'] = {
-      //   backgroundColor: 'salmon',
-      //   color: 'black'
-      // }
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
 
     const classes = [];
@@ -83,15 +93,38 @@ class App extends Component {
     }
 
     return (
+      <StyleRoot>
       <div className="App">
         <h1>Hi, I am a React App</h1>
         <p className={classes.join(' ')}>This is really working</p>
-        <button  
-        onClick={this.togglePersonHandler}> Toggle Person </button>
+        <button 
+        style={style}
+        onClick={this.togglePersonHandler}>Toggle Person</button>
         {person}
       </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
+
+//----------------------------------- Person.js -------------------------------//
+
+const person = (props) => {
+    const style = {
+        '@media (min-width: 500px)': {
+            width: '450px'
+        }
+    }
+    return (
+        <div className="Person" style={style}>
+            <p onClick={props.click}>I am {props.name} and I am {props.age} years old!</p>
+            <p>{props.children}</p>
+            <input type="text" onChange={props.changed} value={props.name} />
+        </div>
+    )
+    // Math.floor(Math.random() * 30) to output random whole number multiplied by 30
+}
+
+export default Radium(person);

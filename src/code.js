@@ -86,13 +86,27 @@ class App extends Component {
           name={this.state.people[2].name} 
           age={this.state.people[2].age} />*/}
         </div> 
-      )
+      );
+
+      style.backgroundColor = 'red'; // this is dynamically assigning styles 
+    }
+
+    // let classes = ['red', 'bold'].join(' '); // returns - red bold
+
+    // Seeting Class Names Dynamically
+    const classes = [];
+    if (this.state.people.length <= 2){
+      classes.push('red'); // classes = ['red]
+    }
+
+    if (this.state.people.length <= 1) {
+      classes.push('bold'); // classes = ['red', 'bold']
     }
 
     return (
       <div className="App">
         <h1>Hi, I am a React App</h1>
-        <p>This is really working</p>
+        <p className={classes.join(' ')}>This is really working</p>
         {/* <button onClick={this.switchNameHandler.bind(this, 'Sanduni')}>Switch Name</button>  */}
         <button 
         style={style}
