@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import './App.css';
 
-import Person from './Person/Person';
+import Person from '../src/Person/Person';
 
 const StyledButton = styled.button`
   background-color: ${ props => props.alt ? 'red' : 'green' };
